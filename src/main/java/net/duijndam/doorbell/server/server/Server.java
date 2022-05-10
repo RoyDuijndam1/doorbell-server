@@ -3,6 +3,7 @@ package net.duijndam.doorbell.server.server;
 import io.javalin.Javalin;
 import io.javalin.websocket.WsContext;
 import net.duijndam.doorbell.server.controller.AccountController;
+import net.duijndam.doorbell.server.model.Account;
 import net.duijndam.doorbell.server.model.Device;
 import net.duijndam.doorbell.server.model.DeviceType;
 import net.duijndam.doorbell.server.model.PC;
@@ -61,6 +62,29 @@ public class Server {
      */
     public void broadcastMessage() {
         userList.stream().filter(ctx ->ctx.session.isOpen()).forEach(session -> session.send("De bel gaat"));
+    }
+
+    public void sendMessage(Account account) {
+        if(!account.isDoNotDisturb() && account.isOnLocation() && account.isDoNotDisturbTimer()) {
+            account.getDevices().forEach(device -> {
+                switch (device.getType()) {
+                    case PC -> {
+                       device.receiveMessage(account.getName() + " de bel gaat op de pc");
+                    }
+
+                    case ANDROID -> {
+                        device.receiveMessage(account.getName() + " de bel gaat op je android");
+
+                    }
+                    case IOS -> {
+                        device.receiveMessage(account.getName() + "de bel gaat op je IOS");
+                    }
+                }
+            });
+        }
+
+
+
     }
 }
 

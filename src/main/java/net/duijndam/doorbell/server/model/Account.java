@@ -6,6 +6,8 @@ public class Account {
     private String name;
     private String password;
     private boolean doNotDisturb;
+    private boolean doNotDisturbTimer;
+    private boolean onLocation;
     private static ArrayList<Account> accounts = new ArrayList<>();
     private ArrayList<Device> devices = new ArrayList<>();
 
@@ -17,6 +19,10 @@ public class Account {
 
     public static ArrayList<Account> getAccounts() {
         return accounts;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public static Account getAccount(int i) {
@@ -42,6 +48,13 @@ public class Account {
         this.doNotDisturb = doNotDisturb;
     }
 
+    public boolean isDoNotDisturbTimer() {
+        return doNotDisturbTimer;
+    }
+
+    public boolean isOnLocation() {
+        return onLocation;
+    }
 
     public void addDevice(Device device) {
         devices.add(device);
