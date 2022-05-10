@@ -39,10 +39,10 @@ public class AccountController_Test {
     }
 
     @Test
-    public void password_test_with_6_characters() {
+    public void password_test_with_0_characters() {
         ArrayList<String> messages = new ArrayList<>();
         messages.add("Password must be longer than 7 characters");
-        Response response = AccountController.create("Henk", "1@chtw");
+        Response response = AccountController.create("Henk", "");
         Assert.assertEquals(messages, response.getMessages());
     }
 
@@ -87,14 +87,6 @@ public class AccountController_Test {
         ArrayList<String> messages = new ArrayList<>();
         messages.add("Password must be shorter than 56 characters");
         Response response = AccountController.create("Henk", "1@chtwoordwachtwoordwachtwoordwachtwoordwachtwoordwachtw");
-        Assert.assertEquals(messages, response.getMessages());
-    }
-
-    @Test
-    public void password_test_with_57_characters() {
-        ArrayList<String> messages = new ArrayList<>();
-        messages.add("Password must be shorter than 56 characters");
-        Response response = AccountController.create("Henk", "1@chtwoordwachtwoordwachtwoordwachtwoordwachtwoordwachtwo");
         Assert.assertEquals(messages, response.getMessages());
     }
 }
