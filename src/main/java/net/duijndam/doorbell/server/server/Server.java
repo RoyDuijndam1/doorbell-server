@@ -6,10 +6,9 @@ import net.duijndam.doorbell.server.controller.AccountController;
 import net.duijndam.doorbell.server.model.Account;
 import net.duijndam.doorbell.server.model.Device;
 import net.duijndam.doorbell.server.model.DeviceType;
-import net.duijndam.doorbell.server.model.PC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import io.javalin.apibuilder.ApiBuilder.*;
+
 import java.util.*;
 
 public class Server {
@@ -40,11 +39,11 @@ public class Server {
 
         //TODO: make handler groups
         //TODO: add to documentation
+        //TODO: look into errorstream
 
         app.post("/account", ctx -> {
-            Response response = AccountController.create(ctx.attribute("name"), ctx.attribute("password"));
-
-//            AccountController.create();
+            Response response = AccountController.create("Henk", "pass");
+            ctx.json(response);
         });
         app.get("/account", ctx -> {
             AccountController.read();
@@ -64,27 +63,25 @@ public class Server {
         userList.stream().filter(ctx ->ctx.session.isOpen()).forEach(session -> session.send("De bel gaat"));
     }
 
-    public void sendMessage(Account account) {
-        if(!account.isDoNotDisturb() && account.isOnLocation() && account.isDoNotDisturbTimer()) {
-            account.getDevices().forEach(device -> {
-                switch (device.getType()) {
-                    case PC -> {
-                       device.receiveMessage(account.getName() + " de bel gaat op de pc");
-                    }
+    public static String sendMessage(Account account) {
+        if (!account.isDoNotDisturb() && account.isOnLocation() && !account.isDoNotDisturbTimer()) {
 
-                    case ANDROID -> {
-                        device.receiveMessage(account.getName() + " de bel gaat op je android");
-
-                    }
-                    case IOS -> {
-                        device.receiveMessage(account.getName() + "de bel gaat op je IOS");
-                    }
+            ArrayList<Device> devices = account.getDevices();
+            for (Device device : devices) {
+                if (device.getType() == DeviceType.PC) {
+                    return "PC bericht";
                 }
-            });
+
+                if (device.getType() == DeviceType.ANDROID) {
+                    return "Android bericht";
+                }
+
+                if (device.getType() == DeviceType.IOS) {
+                    return "IOS bericht";
+                }
+            }
         }
-
-
-
+        return "geen bericht";
     }
 }
 

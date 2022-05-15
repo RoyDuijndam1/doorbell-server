@@ -38,10 +38,12 @@ public class AccountController_Test {
         Assert.assertEquals(messages, response.getMessages());
     }
 
+
     @Test
     public void password_test_with_0_characters() {
         ArrayList<String> messages = new ArrayList<>();
         messages.add("Password must be longer than 7 characters");
+        messages.add("Password needs to contain a number or a special character");
         Response response = AccountController.create("Henk", "");
         Assert.assertEquals(messages, response.getMessages());
     }
@@ -89,4 +91,6 @@ public class AccountController_Test {
         Response response = AccountController.create("Henk", "1@chtwoordwachtwoordwachtwoordwachtwoordwachtwoordwachtw");
         Assert.assertEquals(messages, response.getMessages());
     }
+
+
 }

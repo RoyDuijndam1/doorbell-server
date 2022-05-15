@@ -40,6 +40,9 @@ public class Account {
     public ArrayList<Device> getDevices() {
         return devices;
     }
+
+    public Device getDevice(int index) { return this.devices.get(index); }
+
     public boolean isDoNotDisturb() {
         return doNotDisturb;
     }
@@ -54,6 +57,14 @@ public class Account {
 
     public boolean isOnLocation() {
         return onLocation;
+    }
+
+    public void setDoNotDisturbTimer(boolean doNotDisturbTimer) {
+        this.doNotDisturbTimer = doNotDisturbTimer;
+    }
+
+    public void setOnLocation(boolean onLocation) {
+        this.onLocation = onLocation;
     }
 
     public void addDevice(Device device) {
