@@ -1,11 +1,7 @@
 package net.duijndam.doorbell.server;
 
-import com.pi4j.io.gpio.digital.DigitalState;
-import com.pi4j.io.gpio.digital.DigitalStateChangeListener;
-import net.duijndam.doorbell.server.server.WebServer;
-
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class Main {
 //    public static Config properties;
@@ -15,7 +11,12 @@ public class Main {
 //        properties = new Config(Path.of("config.properties"));
         ArrayList<HardwareListener> doorbellListeners = new ArrayList<>();
         doorbellListeners.add(new MockListener());
-        doorbellListeners.add(new RaspberryPiListener());
+
+        /* Only add the Raspberry Pi listener when running on a Raspberry Pi / ARM */
+        if (Arrays.asList("arm", "arm64", "armhf", "aarch64").contains(System.getProperty("os.arch"))) {
+            doorbellListeners.add(new RaspberryPiListener());
+        }
+
         new Server(doorbellListeners);
 
     }
