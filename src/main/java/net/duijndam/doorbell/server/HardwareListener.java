@@ -14,7 +14,6 @@ abstract public class HardwareListener {
     protected DigitalInput button;
 
     public HardwareListener() {
-        var context = Pi4J.newContext();
         var buttonBuilder = this.createButtonBuilder();
         this.setup(buttonBuilder);
         this.button = pi4j.create(buttonBuilder);
