@@ -4,6 +4,9 @@ import io.javalin.http.HttpCode;
 import net.duijndam.doorbell.server.model.Account;
 import net.duijndam.doorbell.server.server.Response;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class AccountController {
 
     public static Response create(String name, String password) {
@@ -24,9 +27,25 @@ public class AccountController {
         }
     }
 
-    public static Account read() {
-        int i = 1;
-        return Account.getAccount(i);
+    public static Response read(String name, String password) {
+        Response response = new Response();
+        ArrayList<Account> accounts  = Account.getAccounts();
+
+        if(!doesNameExists(name)) {
+            response.addMessage("Name does not exist");
+            return response;
+        }
+
+        Account account = Account.getAccount(name);
+
+        if(!account.getPassword().equals(password)) {
+            response.addMessage("Wrong password");
+        }
+
+        response.setAccount(account);
+        response.setHttpCode(HttpCode.OK);
+
+        return response;
     }
 
     public static void update() {
@@ -56,4 +75,15 @@ public class AccountController {
             response.addMessage("Password needs to contain a number or a special character");
         }
     }
+
+    private static boolean doesNameExists(String name) {
+        ArrayList<Account> accounts = Account.getAccounts();
+        for (Account account : accounts )  {
+            if(account.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
