@@ -17,63 +17,30 @@ public class Account {
         this.password = password;
     }
 
-//    public static ArrayList<Account> getAccounts() {
-//        return accounts;
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
+    public static ArrayList<Account> getAccounts() {
+        return accounts;
+    }
 
-    public static Account getAccount(int i) {
-        return accounts.get(i);
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public static Account getAccount(String name) {
+        for (Account account : accounts) {
+            if (account.name.equals(name)) {
+                return account;
+            }
+        }
+        return null;
     }
 
     public static void addAccount(Account account) {
         accounts.add(account);
     }
-
-//    public static void removeAccount(Account account) {
-//        accounts.remove(account);
-//    }
-
-//    public ArrayList<Device> getDevices() {
-//        return devices;
-//    }
-//
-//    public Device getDevice(int index) { return this.devices.get(index); }
-//
-//    public boolean isDoNotDisturb() {
-//        return doNotDisturb;
-//    }
-//
-//    public void setDoNotDisturb(boolean doNotDisturb) {
-//        this.doNotDisturb = doNotDisturb;
-//    }
-//
-//    public boolean isDoNotDisturbTimer() {
-//        return doNotDisturbTimer;
-//    }
-//
-//    public boolean isOnLocation() {
-//        return onLocation;
-//    }
-//
-//    public void setDoNotDisturbTimer(boolean doNotDisturbTimer) {
-//        this.doNotDisturbTimer = doNotDisturbTimer;
-//    }
-//
-//    public void setOnLocation(boolean onLocation) {
-//        this.onLocation = onLocation;
-//    }
-//
-//    public void addDevice(Device device) {
-//        devices.add(device);
-//    }
-//
-//    public void toggle() {
-//        this.doNotDisturb = !this.doNotDisturb;
-//    }
 
 }
 
