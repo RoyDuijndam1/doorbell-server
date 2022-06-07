@@ -39,11 +39,12 @@ public class WebServer {
         //TODO: look into errorstream
 
         app.post("/account", ctx -> {
-            Response response = AccountController.create("Henk", "pass");
+            Response response = AccountController.create(ctx.attribute("name"), ctx.attribute("password"));
             ctx.json(response);
         });
         app.get("/account", ctx -> {
-            AccountController.read();
+            Response response = AccountController.read(ctx.attribute("name"), ctx.attribute("password"));
+            ctx.json(response);
         });
         app.put("/account", ctx -> {
             AccountController.update();
