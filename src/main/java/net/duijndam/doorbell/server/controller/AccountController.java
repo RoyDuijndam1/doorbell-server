@@ -4,8 +4,6 @@ import io.javalin.http.HttpCode;
 import net.duijndam.doorbell.server.model.Account;
 import net.duijndam.doorbell.server.server.Response;
 
-import java.util.ArrayList;
-
 public class AccountController {
 
     public static Response create(String name, String password) {
