@@ -5,7 +5,6 @@ import net.duijndam.doorbell.server.model.Account;
 import net.duijndam.doorbell.server.server.Response;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class AccountController {
 
@@ -29,7 +28,6 @@ public class AccountController {
 
     public static Response read(String name, String password) {
         Response response = new Response();
-        ArrayList<Account> accounts  = Account.getAccounts();
 
         if(!doesNameExists(name)) {
             response.addMessage("Name does not exist");
@@ -48,12 +46,14 @@ public class AccountController {
         return response;
     }
 
-    public static void update() {
-
+    public static Response update(String name, String password) {
+        Response response = new Response();
+        return response;
     }
 
-    public static void delete() {
-
+    public static Response delete(String name, String password) {
+        Response response = new Response();
+        return response;
     }
 
     private static void checkName(String name, Response response) {

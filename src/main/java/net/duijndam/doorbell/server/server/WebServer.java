@@ -47,10 +47,12 @@ public class WebServer {
             ctx.json(response);
         });
         app.put("/account", ctx -> {
-            AccountController.update();
+            Response response = AccountController.update(ctx.attribute("name"), ctx.attribute("password"));
+            ctx.json(response);
         });
         app.delete("/account", ctx -> {
-            AccountController.delete();
+            Response response = AccountController.delete(ctx.attribute("name"), ctx.attribute("password"));
+            ctx.json(response);
         });
     }
 
@@ -60,30 +62,6 @@ public class WebServer {
     public void broadcastMessage() {
         userList.stream().filter(ctx ->ctx.session.isOpen()).forEach(session -> session.send("De bel gaat"));
     }
-
-    /**
-     * Save this method for school
-     */
-//    public static String sendMessage(Account account) {
-//        if (!account.isDoNotDisturb() && account.isOnLocation() && !account.isDoNotDisturbTimer()) {
-//
-//            ArrayList<Device> devices = account.getDevices();
-//            for (Device device : devices) {
-//                if (device.getType() == DeviceType.PC) {
-//                    return "PC bericht";
-//                }
-//
-//                if (device.getType() == DeviceType.ANDROID) {
-//                    return "Android bericht";
-//                }
-//
-//                if (device.getType() == DeviceType.IOS) {
-//                    return "IOS bericht";
-//                }
-//            }
-//        }
-//        return "geen bericht";
-//    }
 }
 
 

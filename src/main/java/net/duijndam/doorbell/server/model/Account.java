@@ -5,12 +5,7 @@ import java.util.ArrayList;
 public class Account {
     private String name;
     private String password;
-//    private boolean doNotDisturb;
-//    private boolean doNotDisturbTimer;
-//    private boolean onLocation;
     private static ArrayList<Account> accounts = new ArrayList<>();
-//    private ArrayList<Device> devices = new ArrayList<>();
-
 
     public Account(String name, String password) {
         this.name = name;
