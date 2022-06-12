@@ -20,7 +20,7 @@ abstract public class HardwareListener {
     }
 
     /**
-     *  create a button that recieves the signal from the doorbell
+     *  create a button that receives the signal from the doorbell
      * @return DigitalInput
      */
     private DigitalInputConfigBuilder createButtonBuilder() {

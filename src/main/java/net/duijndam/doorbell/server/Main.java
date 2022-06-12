@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
-//    public static Config properties;
 
-
-    public static void main(String[] args) throws Exception {
-//        properties = new Config(Path.of("config.properties"));
+    public static void main(String[] args) {
         ArrayList<HardwareListener> doorbellListeners = new ArrayList<>();
         doorbellListeners.add(new MockListener());
 
@@ -18,13 +15,9 @@ public class Main {
         }
 
         new Server(doorbellListeners);
-
     }
 
-
-
     //TODO: config file, port, development
-    //TODO: RaspberryPiListener afmaken
     //TODO: Java.util.observable
 }
 

@@ -19,7 +19,7 @@ public class MockListener extends HardwareListener {
     }
 
     /**
-     * create a mockListener to test the application with. if you press l in the terminal then the it will simulate a
+     * create a mockListener to test the application with. if you press l in the terminal then it will simulate a
      * doorbell signal
      */
     private void startMockListener() {

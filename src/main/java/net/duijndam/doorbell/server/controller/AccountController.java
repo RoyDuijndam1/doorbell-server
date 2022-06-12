@@ -17,42 +17,41 @@ public class AccountController {
             Account account = new Account(name, password);
             Account.addAccount(account);
             response.setHttpCode(HttpCode.CREATED);
-            return response;
 
         } else {
             response.setHttpCode(HttpCode.BAD_REQUEST);
-            return response;
 
         }
+        return response;
     }
 
-    public static Response read(String name, String password) {
+    public static Response read(String name, String password) throws Exception {
+        return generateResponse(name, password);
+    }
+
+    public static Response update(String name, String password) throws Exception {
+        Response response = generateResponse(name, password);
+
+        response.getAccount().setName(name);
+        response.getAccount().setPassword(password);
+
+        return response;
+    }
+
+    public static Response delete(String name, String password) throws Exception {
+        Response response = generateResponse(name, password);
+
+        Account.getAccounts().remove(response.getAccount());
+
+        return response;
+    }
+
+    private static Response generateResponse(String name, String password) throws Exception {
         Response response = new Response();
-
-        if(!doesNameExists(name)) {
-            response.addMessage("Name does not exist");
-            return response;
-        }
-
+        doesNameExists(name);
         Account account = Account.getAccount(name);
-
-        if(!account.getPassword().equals(password)) {
-            response.addMessage("Wrong password");
-        }
-
-        response.setAccount(account);
+        passwordEqualsAccountPassword(account, password);
         response.setHttpCode(HttpCode.OK);
-
-        return response;
-    }
-
-    public static Response update(String name, String password) {
-        Response response = new Response();
-        return response;
-    }
-
-    public static Response delete(String name, String password) {
-        Response response = new Response();
         return response;
     }
 
@@ -76,14 +75,20 @@ public class AccountController {
         }
     }
 
-    private static boolean doesNameExists(String name) {
+    private static void doesNameExists(String name) throws Exception {
         ArrayList<Account> accounts = Account.getAccounts();
         for (Account account : accounts )  {
             if(account.getName().equals(name)) {
-                return true;
+                return ;
             }
         }
-        return false;
+        throw new Exception("Name does not exist");
+    }
+
+    private static void passwordEqualsAccountPassword(Account account, String password) throws Exception {
+        if (account != null && account.getPassword().equals(password)) {
+            throw new Exception("Wrong password");
+        }
     }
 
 }

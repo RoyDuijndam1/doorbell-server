@@ -4,7 +4,6 @@ import com.pi4j.io.gpio.digital.DigitalState;
 import com.pi4j.io.gpio.digital.DigitalStateChangeListener;
 import net.duijndam.doorbell.server.server.WebServer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Server {

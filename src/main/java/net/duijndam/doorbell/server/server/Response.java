@@ -7,12 +7,8 @@ import java.util.ArrayList;
 
 public class Response {
     private HttpCode httpCode;
-    private ArrayList<String> messages = new ArrayList<>();
+    private final ArrayList<String> messages = new ArrayList<>();
     private Account account;
-
-    public HttpCode getHttpCode() {
-        return httpCode;
-    }
 
     public void setHttpCode(HttpCode httpCode) {
         this.httpCode = httpCode;

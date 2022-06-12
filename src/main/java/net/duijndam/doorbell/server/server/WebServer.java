@@ -9,14 +9,14 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 public class WebServer {
-    private List<WsContext> userList = Collections.synchronizedList(new ArrayList<WsContext>());
+    private final List<WsContext> userList = Collections.synchronizedList(new ArrayList<>());
     private static final Logger LOGGER = LoggerFactory.getLogger(WebServer.class);
 
 
     /**
      * Create a Javalin app and set rules for how to react on: on connect, on close and on error.
-     * On Connect: add user to userlist
-     * On close: remove user from userlist
+     * On Connect: add user to user list
+     * On close: remove user from user list
      */
     public WebServer() {
         Javalin app = Javalin.create().start(80);
@@ -36,28 +36,17 @@ public class WebServer {
 
         //TODO: make handler groups
         //TODO: add to documentation
-        //TODO: look into errorstream
+        //TODO: look into error stream
 
-        app.post("/account", ctx -> {
-            Response response = AccountController.create(ctx.attribute("name"), ctx.attribute("password"));
-            ctx.json(response);
-        });
-        app.get("/account", ctx -> {
-            Response response = AccountController.read(ctx.attribute("name"), ctx.attribute("password"));
-            ctx.json(response);
-        });
-        app.put("/account", ctx -> {
-            Response response = AccountController.update(ctx.attribute("name"), ctx.attribute("password"));
-            ctx.json(response);
-        });
-        app.delete("/account", ctx -> {
-            Response response = AccountController.delete(ctx.attribute("name"), ctx.attribute("password"));
-            ctx.json(response);
-        });
+        app.post("/account", ctx -> ctx.json(AccountController.create(ctx.attribute("name"), ctx.attribute("password"))));
+        app.get("/account", ctx -> ctx.json(AccountController.read(ctx.attribute("name"), ctx.attribute("password"))));
+        app.put("/account", ctx -> ctx.json( AccountController.update(ctx.attribute("name"), ctx.attribute("password"))));
+        app.delete("/account", ctx -> ctx.json(AccountController.delete(ctx.attribute("name"), ctx.attribute("password"))));
+        app.exception(Exception.class, (e, ctx) -> ctx.json(e.getMessage()));
     }
 
     /**
-     * sends a message to all the users in the userlist
+     * sends a message to all the users in the user list
      */
     public void broadcastMessage() {
         userList.stream().filter(ctx ->ctx.session.isOpen()).forEach(session -> session.send("De bel gaat"));
